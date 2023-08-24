@@ -1,0 +1,277 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+  <!-- EF Runtime content -->
+  <edmx:Runtime>
+    <!-- SSDL content -->
+    <edmx:StorageModels>
+    <Schema Namespace="Model1.Store" Alias="Self" Provider="System.Data.SqlClient" ProviderManifestToken="2012" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+  <EntityContainer Name="Model1StoreContainer">
+    <EntitySet Name="LandLords" EntityType="Model1.Store.LandLords" store:Type="Tables" Schema="dbo" />
+    <EntitySet Name="Customers" EntityType="Model1.Store.Customers" store:Type="Tables" Schema="dbo" />
+    <EntitySet Name="ForSales" EntityType="Model1.Store.ForSales" store:Type="Tables" Schema="dbo" />
+    <EntitySet Name="ForRentals" EntityType="Model1.Store.ForRentals" store:Type="Tables" Schema="dbo" />
+    <AssociationSet Name="LandLordForRental" Association="Model1.Store.LandLordForRental">
+      <End Role="LandLord" EntitySet="LandLords" />
+      <End Role="ForRental" EntitySet="ForRentals" />
+    </AssociationSet>
+    <AssociationSet Name="LandLordForSale" Association="Model1.Store.LandLordForSale">
+      <End Role="LandLord" EntitySet="LandLords" />
+      <End Role="ForSale" EntitySet="ForSales" />
+    </AssociationSet>
+    <AssociationSet Name="CustomerLandLord" Association="Model1.Store.CustomerLandLord">
+      <End Role="Customer" EntitySet="Customers" />
+      <End Role="LandLord" EntitySet="LandLords" />
+    </AssociationSet>
+  </EntityContainer>
+  <EntityType Name="LandLords">
+    <Key>
+      <PropertyRef Name="LandLordID" />
+    </Key>
+    <Property Name="LandLordID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="NameSurname" Type="nvarchar(max)" Nullable="false" />
+    <Property Name="Age" Type="int" Nullable="false" />
+    <Property Name="Wage" Type="decimal" Nullable="false" />
+  </EntityType>
+  <EntityType Name="Customers">
+    <Key>
+      <PropertyRef Name="CustomerID" />
+    </Key>
+    <Property Name="CustomerID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="NameSurname" Type="nvarchar(max)" Nullable="false" />
+    <Property Name="Age" Type="int" Nullable="false" />
+    <Property Name="Job" Type="nvarchar(max)" Nullable="false" />
+    <Property Name="Wage" Type="decimal" Nullable="false" />
+    <Property Name="CustomerLandLord_Customer_LandLordID" Type="int" Nullable="false" />
+  </EntityType>
+  <EntityType Name="ForSales">
+    <Key>
+      <PropertyRef Name="ForSaleID" />
+    </Key>
+    <Property Name="ForSaleID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="Price" Type="decimal" Nullable="false" />
+    <Property Name="Case" Type="nvarchar(max)" Nullable="false" />
+    <Property Name="LandLordLandLordID" Type="int" Nullable="false" />
+    <Property Name="Name" Type="nvarchar(max)" Nullable="false" />
+    <Property Name="Location" Type="nvarchar(max)" Nullable="false" />
+  </EntityType>
+  <EntityType Name="ForRentals">
+    <Key>
+      <PropertyRef Name="ForRentalID" />
+    </Key>
+    <Property Name="ForRentalID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="Price" Type="decimal" Nullable="false" />
+    <Property Name="Case" Type="nvarchar(max)" Nullable="false" />
+    <Property Name="LandLordLandLordID" Type="int" Nullable="false" />
+    <Property Name="Name" Type="nvarchar(max)" Nullable="false" />
+    <Property Name="Location" Type="nvarchar(max)" Nullable="false" />
+  </EntityType>
+  <Association Name="LandLordForRental">
+    <End Role="LandLord" Type="Model1.Store.LandLords" Multiplicity="1" />
+    <End Role="ForRental" Type="Model1.Store.ForRentals" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="LandLord">
+        <PropertyRef Name="LandLordID" />
+      </Principal>
+      <Dependent Role="ForRental">
+        <PropertyRef Name="LandLordLandLordID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="LandLordForSale">
+    <End Role="LandLord" Type="Model1.Store.LandLords" Multiplicity="1" />
+    <End Role="ForSale" Type="Model1.Store.ForSales" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="LandLord">
+        <PropertyRef Name="LandLordID" />
+      </Principal>
+      <Dependent Role="ForSale">
+        <PropertyRef Name="LandLordLandLordID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="CustomerLandLord">
+    <End Role="Customer" Type="Model1.Store.Customers" Multiplicity="*" />
+    <End Role="LandLord" Type="Model1.Store.LandLords" Multiplicity="1" />
+    <ReferentialConstraint>
+      <Principal Role="LandLord">
+        <PropertyRef Name="LandLordID" />
+      </Principal>
+      <Dependent Role="Customer">
+        <PropertyRef Name="CustomerLandLord_Customer_LandLordID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+</Schema></edmx:StorageModels>
+    <!-- CSDL content -->
+    <edmx:ConceptualModels>
+      <Schema xmlns="http://schemas.microsoft.com/ado/2009/11/edm" xmlns:cg="http://schemas.microsoft.com/ado/2006/04/codegeneration" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" Namespace="Model1" Alias="Self" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" annotation:UseStrongSpatialTypes="false">
+        <EntityContainer Name="Model1Container" annotation:LazyLoadingEnabled="true">
+          <EntitySet Name="LandLords" EntityType="Model1.LandLord" />
+          <EntitySet Name="Customers" EntityType="Model1.Customer" />
+          <EntitySet Name="ForSales" EntityType="Model1.ForSale" />
+          <EntitySet Name="ForRentals" EntityType="Model1.ForRental" />
+          <AssociationSet Name="LandLordForRental" Association="Model1.LandLordForRental">
+            <End Role="LandLord" EntitySet="LandLords" />
+            <End Role="ForRental" EntitySet="ForRentals" />
+          </AssociationSet>
+          <AssociationSet Name="LandLordForSale" Association="Model1.LandLordForSale">
+            <End Role="LandLord" EntitySet="LandLords" />
+            <End Role="ForSale" EntitySet="ForSales" />
+          </AssociationSet>
+          <AssociationSet Name="CustomerLandLord" Association="Model1.CustomerLandLord">
+            <End Role="Customer" EntitySet="Customers" />
+            <End Role="LandLord" EntitySet="LandLords" />
+          </AssociationSet>
+        </EntityContainer>
+        <EntityType Name="LandLord">
+          <Key>
+            <PropertyRef Name="LandLordID" />
+          </Key>
+          <Property Name="LandLordID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="NameSurname" Type="String" Nullable="false" />
+          <Property Name="Age" Type="Int32" Nullable="false" />
+          <Property Name="Wage" Type="Decimal" Nullable="false" />
+          </EntityType>
+        <EntityType Name="Customer">
+          <Key>
+            <PropertyRef Name="CustomerID" />
+          </Key>
+          <Property Name="CustomerID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="NameSurname" Type="String" Nullable="false" />
+          <Property Name="Age" Type="Int32" Nullable="false" />
+          <Property Name="Job" Type="String" Nullable="false" />
+          <Property Name="Wage" Type="Decimal" Nullable="false" />
+          </EntityType>
+        <EntityType Name="ForSale">
+          <Key>
+            <PropertyRef Name="ForSaleID" />
+          </Key>
+          <Property Name="ForSaleID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Price" Type="Decimal" Nullable="false" />
+          <Property Name="Case" Type="String" Nullable="false" />
+          <Property Name="LandLordLandLordID" Type="Int32" Nullable="false" />
+          <Property Name="Name" Type="String" Nullable="false" />
+          <Property Name="Location" Type="String" Nullable="false" />
+        </EntityType>
+        <EntityType Name="ForRental">
+          <Key>
+            <PropertyRef Name="ForRentalID" />
+          </Key>
+          <Property Name="ForRentalID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Price" Type="Decimal" Nullable="false" />
+          <Property Name="Case" Type="String" Nullable="false" />
+          <Property Name="LandLordLandLordID" Type="Int32" Nullable="false" />
+          <Property Name="Name" Type="String" Nullable="false" />
+          <Property Name="Location" Type="String" Nullable="false" />
+        </EntityType>
+        <Association Name="LandLordForRental">
+          <End Type="Model1.LandLord" Role="LandLord" Multiplicity="1" />
+          <End Type="Model1.ForRental" Role="ForRental" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="LandLord">
+              <PropertyRef Name="LandLordID" />
+            </Principal>
+            <Dependent Role="ForRental">
+              <PropertyRef Name="LandLordLandLordID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="LandLordForSale">
+          <End Type="Model1.LandLord" Role="LandLord" Multiplicity="1" />
+          <End Type="Model1.ForSale" Role="ForSale" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="LandLord">
+              <PropertyRef Name="LandLordID" />
+            </Principal>
+            <Dependent Role="ForSale">
+              <PropertyRef Name="LandLordLandLordID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="CustomerLandLord">
+          <End Type="Model1.Customer" Role="Customer" Multiplicity="1" />
+          <End Type="Model1.LandLord" Role="LandLord" Multiplicity="1" />
+        </Association>
+      </Schema>
+    </edmx:ConceptualModels>
+    <!-- C-S mapping content -->
+    <edmx:Mappings>
+    <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
+  <EntityContainerMapping StorageEntityContainer="Model1StoreContainer" CdmEntityContainer="Model1Container">
+    <EntitySetMapping Name="LandLords">
+      <EntityTypeMapping TypeName="IsTypeOf(Model1.LandLord)">
+        <MappingFragment StoreEntitySet="LandLords">
+          <ScalarProperty Name="LandLordID" ColumnName="LandLordID" />
+          <ScalarProperty Name="NameSurname" ColumnName="NameSurname" />
+          <ScalarProperty Name="Age" ColumnName="Age" />
+          <ScalarProperty Name="Wage" ColumnName="Wage" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="Customers">
+      <EntityTypeMapping TypeName="IsTypeOf(Model1.Customer)">
+        <MappingFragment StoreEntitySet="Customers">
+          <ScalarProperty Name="CustomerID" ColumnName="CustomerID" />
+          <ScalarProperty Name="NameSurname" ColumnName="NameSurname" />
+          <ScalarProperty Name="Age" ColumnName="Age" />
+          <ScalarProperty Name="Job" ColumnName="Job" />
+          <ScalarProperty Name="Wage" ColumnName="Wage" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="ForSales">
+      <EntityTypeMapping TypeName="IsTypeOf(Model1.ForSale)">
+        <MappingFragment StoreEntitySet="ForSales">
+          <ScalarProperty Name="ForSaleID" ColumnName="ForSaleID" />
+          <ScalarProperty Name="Price" ColumnName="Price" />
+          <ScalarProperty Name="Case" ColumnName="Case" />
+          <ScalarProperty Name="LandLordLandLordID" ColumnName="LandLordLandLordID" />
+          <ScalarProperty Name="Name" ColumnName="Name" />
+          <ScalarProperty Name="Location" ColumnName="Location" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="ForRentals">
+      <EntityTypeMapping TypeName="IsTypeOf(Model1.ForRental)">
+        <MappingFragment StoreEntitySet="ForRentals">
+          <ScalarProperty Name="ForRentalID" ColumnName="ForRentalID" />
+          <ScalarProperty Name="Price" ColumnName="Price" />
+          <ScalarProperty Name="Case" ColumnName="Case" />
+          <ScalarProperty Name="LandLordLandLordID" ColumnName="LandLordLandLordID" />
+          <ScalarProperty Name="Name" ColumnName="Name" />
+          <ScalarProperty Name="Location" ColumnName="Location" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <AssociationSetMapping Name="CustomerLandLord" TypeName="Model1.CustomerLandLord" StoreEntitySet="Customers">
+      <EndProperty Name="LandLord">
+        <ScalarProperty Name="LandLordID" ColumnName="CustomerLandLord_Customer_LandLordID" />
+      </EndProperty>
+      <EndProperty Name="Customer">
+        <ScalarProperty Name="CustomerID" ColumnName="CustomerID" />
+      </EndProperty>
+    </AssociationSetMapping>
+  </EntityContainerMapping>
+</Mapping></edmx:Mappings>
+  </edmx:Runtime>
+  <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <edmx:Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <edmx:Connection>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="MetadataArtifactProcessing" Value="EmbedInOutputAssembly" />
+      </DesignerInfoPropertySet>
+    </edmx:Connection>
+    <edmx:Options>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="ValidateOnBuild" Value="true" />
+        <DesignerProperty Name="EnablePluralization" Value="True" />
+        <DesignerProperty Name="CodeGenerationStrategy" Value="None" />
+        <DesignerProperty Name="UseLegacyProvider" Value="False" />
+        <DesignerProperty Name="IncludeForeignKeysInModel" Value="True" />
+      </DesignerInfoPropertySet>
+    </edmx:Options>
+    <!-- Diagram content (shape and connector positions) -->
+    <edmx:Diagrams>
+    </edmx:Diagrams>
+  </edmx:Designer>
+</edmx:Edmx>
